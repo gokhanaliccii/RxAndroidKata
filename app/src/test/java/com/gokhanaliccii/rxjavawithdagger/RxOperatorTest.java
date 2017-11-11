@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.BiFunction;
+import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 import io.reactivex.observers.TestObserver;
 
@@ -49,4 +50,17 @@ public class RxOperatorTest {
         testObserver.assertResult(expected);
     }
 
+    @Test
+    public void should_MapStringToIntegerCorrectly() {
+        final Integer expected = 12;
+
+        Observable.just(String.valueOf(12)).map(new Function<String, Integer>() {
+            @Override
+            public Integer apply(String s) throws Exception {
+                return Integer.parseInt(s);
+            }
+        }).subscribe(testObserver);
+
+        testObserver.assertResult(expected);
+    }
 }
