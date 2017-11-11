@@ -63,4 +63,34 @@ public class RxOperatorTest {
 
         testObserver.assertResult(expected);
     }
+
+    @Test
+    public void should_SumFirstTwoNumbersCorrectly(){
+        int expected = 3;
+
+        Observable.range(1,50).take(2).reduce(new BiFunction<Integer, Integer, Integer>() {
+            @Override
+            public Integer apply(Integer integer, Integer integer2) throws Exception {
+                return integer+integer2;
+            }
+        }).subscribe(testObserver);
+
+        testObserver.assertResult(expected);
+    }
+
+    @Test
+    public void should_SumLastNumberOnly() {
+        int expected = 5;
+
+        Observable.range(1,5).skip(4).reduce(new BiFunction<Integer, Integer, Integer>() {
+            @Override
+            public Integer apply(Integer integer, Integer integer2) throws Exception {
+                return integer + integer2;
+            }
+        }).subscribe(testObserver);
+
+        testObserver.assertResult(expected);
+    }
+
+
 }
