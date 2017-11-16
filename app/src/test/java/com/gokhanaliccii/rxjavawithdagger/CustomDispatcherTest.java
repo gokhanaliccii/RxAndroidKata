@@ -11,8 +11,10 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Function;
+import okhttp3.mockwebserver.Dispatcher;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
+import okhttp3.mockwebserver.RecordedRequest;
 
 /**
  * Created by gokhan on 16/11/17.
@@ -57,6 +59,33 @@ public class CustomDispatcherTest {
 
         int requestCount = mockWebServer.getRequestCount();
         System.out.println("count:" + requestCount);
+    }
+
+    @Test
+    public void should_CallUserServiceCorrectly() throws InterruptedException {
+        Dispatcher dispatcher = new Dispatcher() {
+            @Override
+            public MockResponse dispatch(RecordedRequest request) throws InterruptedException {
+                String path = request.getPath();
+                System.out.println(path);
+
+                if (path.equals("getUser")) {
+                    String dummyResponse = new Gson().toJson(new User("gokhan"));
+                    return new MockResponse().setBody(dummyResponse);
+                }
+
+
+                return null;
+            }
+        };
+
+        mockWebServer.setDispatcher(dispatcher);
+
+        String apiUrl = mockWebServer.url("/").toString();
+
+        RestAdapter restAdapter = RestAdapter.getInstance(apiUrl);
+        restAdapter.restClient().getUser().subscribe();
+
 
     }
 
