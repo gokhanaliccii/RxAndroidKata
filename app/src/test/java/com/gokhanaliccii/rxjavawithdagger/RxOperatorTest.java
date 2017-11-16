@@ -221,7 +221,7 @@ public class RxOperatorTest {
         BehaviorSubject<String> behaviorSubject = BehaviorSubject.create();
         behaviorSubject.onNext("1");
         behaviorSubject.onNext("2");
-
+        behaviorSubject.onComplete();
         behaviorSubject.subscribe(getObserver("f"));
     }
 
