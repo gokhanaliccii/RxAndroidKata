@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RestAdapter {
 
-    public static String BASE_URL = "http:/gokhan.com";
+    public static String BASE_URL = "http://gokhan.com";
 
     private static RestAdapter sRestAdapter;
 
