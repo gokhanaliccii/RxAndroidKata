@@ -168,6 +168,12 @@ public class SearchDebounceTest {
 
         int requestCount = mockWebServer.getRequestCount();
         Assert.assertTrue(requestCount == 2);
+    }
+
+    @Test
+    public void should_WaitTwoSecondBeforeApiCall() {
+
+        waitInMilisecond(5000);
 
     }
 
