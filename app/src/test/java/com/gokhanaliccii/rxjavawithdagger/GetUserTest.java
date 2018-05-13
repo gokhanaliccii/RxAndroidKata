@@ -167,12 +167,12 @@ public class GetUserTest {
         }).repeatWhen(new Function<Observable<Object>, ObservableSource<?>>() {
             @Override
             public ObservableSource<?> apply(Observable<Object> objectObservable) throws Exception {
-                return Observable.range(1,2).flatMap(new Function<Integer, ObservableSource<?>>() {
+                return Observable.range(1, 2).flatMap(new Function<Integer, ObservableSource<?>>() {
                     @Override
                     public ObservableSource<?> apply(Integer integer) throws Exception {
-                        return Observable.timer(integer*4,TimeUnit.SECONDS);
+                        return Observable.timer(integer * 4, TimeUnit.SECONDS);
                     }
-                }).take(1);
+                });
             }
         }).subscribe(new Consumer<String>() {
             @Override
@@ -181,6 +181,7 @@ public class GetUserTest {
                 System.out.println(System.currentTimeMillis());
             }
         });
+
 
         Thread.sleep(40000);
     }
